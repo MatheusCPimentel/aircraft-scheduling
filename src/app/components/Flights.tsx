@@ -28,6 +28,7 @@ export const Flights = ({
   currentRotation,
 }: FlightsProps) => {
   const TURNAROUND_TIME_IN_SECONDS = 20 * 60;
+  const SECONDS_IN_A_DAY = 24 * 60 * 60;
 
   const [flights, setFlights] = useState<Flight[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -86,14 +87,7 @@ export const Flights = ({
     }
 
     if (currentRotation.length === 0) {
-      if (flight.departuretime < 0) {
-        return {
-          available: false,
-          reason: "Flight cannot start before midnight",
-        };
-      }
-
-      if (flight.arrivaltime > 24 * 60 * 60) {
+      if (flight.arrivaltime > SECONDS_IN_A_DAY) {
         return {
           available: false,
           reason: "Flight cannot end after midnight",
@@ -104,6 +98,13 @@ export const Flights = ({
     }
 
     const lastFlight = currentRotation[currentRotation.length - 1];
+
+    if (flight.departuretime < lastFlight.arrivaltime) {
+      return {
+        available: false,
+        reason: "Flights must be in chronological order",
+      };
+    }
 
     if (
       flight.departuretime <
@@ -121,7 +122,7 @@ export const Flights = ({
       };
     }
 
-    if (flight.arrivaltime > 24 * 60 * 60) {
+    if (flight.arrivaltime > SECONDS_IN_A_DAY) {
       return {
         available: false,
         reason: "Flight cannot end after midnight",
