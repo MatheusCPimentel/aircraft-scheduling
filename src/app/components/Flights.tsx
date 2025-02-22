@@ -139,19 +139,19 @@ export const Flights = ({
   };
 
   return (
-    <Card className="gap-4">
-      <h2 className="text-lg font-semibold">Flights</h2>
+    <Tooltip.Provider>
+      <Card className="gap-4">
+        <h2 className="text-lg font-semibold">Flights</h2>
 
-      {isLoading ? (
-        <FlightsShimmer />
-      ) : (
-        <div className="flex flex-col gap-4 w-full overflow-y-auto overflow-x-visible pr-4 -mr-4">
-          {flights.map((flight) => {
-            const availability = checkFlightAvailability(flight);
+        {isLoading ? (
+          <FlightsShimmer />
+        ) : (
+          <div className="flex flex-col gap-4 w-full overflow-y-auto overflow-x-visible pr-4 -mr-4">
+            {flights.map((flight) => {
+              const availability = checkFlightAvailability(flight);
 
-            return (
-              <Tooltip.Provider key={flight.ident}>
-                <Tooltip.Root delayDuration={0}>
+              return (
+                <Tooltip.Root key={flight.ident} delayDuration={0}>
                   <Tooltip.Trigger asChild>
                     <div
                       className={`flex items-center w-full justify-between p-3 border rounded-md group relative
@@ -201,11 +201,11 @@ export const Flights = ({
                     </Tooltip.Content>
                   )}
                 </Tooltip.Root>
-              </Tooltip.Provider>
-            );
-          })}
-        </div>
-      )}
-    </Card>
+              );
+            })}
+          </div>
+        )}
+      </Card>
+    </Tooltip.Provider>
   );
 };
