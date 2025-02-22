@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { AircraftRotations } from "@/types/rotation";
 import { fetchWrapper } from "@/services/api";
 import { FlightsShimmer } from "./shimmer/FlightsShimmer";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 interface FlightAvailability {
   available: boolean;
@@ -144,52 +145,63 @@ export const Flights = ({
       {isLoading ? (
         <FlightsShimmer />
       ) : (
-        <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
+        <div className="flex flex-col gap-4 w-full overflow-y-auto overflow-x-visible pr-4 -mr-4">
           {flights.map((flight) => {
             const availability = checkFlightAvailability(flight);
 
             return (
-              <div
-                key={flight.ident}
-                className={`flex items-center w-full justify-between p-3 border rounded-md group relative
-                  ${
-                    !availability.available
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:border-blue-500 cursor-pointer"
-                  }
-                `}
-                onClick={() => availability.available && onAddFlight(flight)}
-              >
-                <div className="w-full flex flex-col gap-2">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">{flight.ident}</span>
+              <Tooltip.Provider key={flight.ident}>
+                <Tooltip.Root delayDuration={0}>
+                  <Tooltip.Trigger asChild>
+                    <div
+                      className={`flex items-center w-full justify-between p-3 border rounded-md group relative
+                        ${
+                          !availability.available
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:border-blue-500 cursor-pointer"
+                        }
+                      `}
+                      onClick={() =>
+                        availability.available && onAddFlight(flight)
+                      }
+                    >
+                      <div className="w-full flex flex-col gap-2">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium">{flight.ident}</span>
 
-                    {availability.available && (
-                      <span className="text-sm text-blue-500">
-                        Click to add
-                      </span>
-                    )}
-                  </div>
+                          {availability.available && (
+                            <span className="text-sm text-blue-500">
+                              Click to add
+                            </span>
+                          )}
+                        </div>
 
-                  <div className="flex items-center justify-between gap-4 text-sm text-gray-500">
-                    <div className="flex flex-col items-center">
-                      <p className="font-medium">{flight.origin}</p>
-                      <p>{flight.readable_departure}</p>
+                        <div className="flex items-center justify-between gap-4 text-sm text-gray-500">
+                          <div className="flex flex-col items-center">
+                            <p className="font-medium">{flight.origin}</p>
+                            <p>{flight.readable_departure}</p>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <p className="font-medium">{flight.destination}</p>
+                            <p>{flight.readable_arrival}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </Tooltip.Trigger>
 
-                    <div className="flex flex-col items-center">
-                      <p className="font-medium">{flight.destination}</p>
-                      <p>{flight.readable_arrival}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {!availability.available && availability.reason && (
-                  <div className="absolute left-1/2 -translate-x-1/2 -top-14 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 text-white text-sm py-2 px-4 rounded-lg text-center mx-4 pointer-events-none shadow-lg before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:top-full before:border-8 before:border-transparent before:border-t-gray-800">
-                    {availability.reason}
-                  </div>
-                )}
-              </div>
+                  {!availability.available && availability.reason && (
+                    <Tooltip.Content
+                      className="bg-gray-800 text-white text-sm py-1 px-3 rounded"
+                      side="top"
+                    >
+                      {availability.reason}
+                      <Tooltip.Arrow className="fill-gray-800" />
+                    </Tooltip.Content>
+                  )}
+                </Tooltip.Root>
+              </Tooltip.Provider>
             );
           })}
         </div>
