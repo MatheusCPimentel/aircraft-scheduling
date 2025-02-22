@@ -1,3 +1,3 @@
 export const Timeline = () => {
-  return <div className="h-full bg-red-200"></div>;
+  return <div className="h-[200px] bg-red-200"></div>;
 };
