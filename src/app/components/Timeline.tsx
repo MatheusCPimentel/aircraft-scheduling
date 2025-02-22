@@ -4,6 +4,7 @@ import { Flight } from "@/types/flight";
 import { Aircraft } from "@/types/aircraft";
 import { TimeBlock } from "@/types/rotation";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { Card } from "./Card";
 import {
   SECONDS_IN_DAY,
   TURNAROUND_TIME_SECONDS,
@@ -70,11 +71,11 @@ export const Timeline = ({
   const getBlockColor = (type: TimeBlock["type"]): string => {
     switch (type) {
       case "flight":
-        return "bg-green-500";
+        return "bg-green-600";
       case "turnaround":
-        return "bg-purple-500";
+        return "bg-purple-400";
       case "idle":
-        return "bg-gray-300";
+        return "bg-gray-200";
     }
   };
 
@@ -103,21 +104,23 @@ export const Timeline = ({
   const hoursToDisplay = [0, 6, 12, 18, 24];
 
   return (
-    <div className="gap-4">
+    <Card className="p-4">
+      <h2 className="text-lg font-semibold mb-4">Timeline</h2>
+
       {!selectedAircraft ? (
-        <p className="text-gray-500 text-center py-4">
+        <p className="text-slate-500 text-center py-8">
           Select an aircraft to view its timeline
         </p>
       ) : (
         <Tooltip.Provider>
           <div className="flex flex-col gap-4">
-            <div className="flex justify-between text-sm text-gray-500 px-1">
+            <div className="flex justify-between text-sm text-slate-500 px-1">
               {hoursToDisplay.map((hour) => (
                 <span key={hour}>{hour.toString().padStart(2, "0")}:00</span>
               ))}
             </div>
 
-            <div className="flex h-8 w-full rounded-md overflow-hidden">
+            <div className="flex h-10 w-full rounded-lg overflow-hidden bg-slate-100">
               {timeBlocks.map((block, index) => (
                 <Tooltip.Root key={index} delayDuration={0}>
                   <Tooltip.Trigger asChild>
@@ -128,36 +131,36 @@ export const Timeline = ({
                   </Tooltip.Trigger>
 
                   <Tooltip.Content
-                    className="bg-gray-800 text-white text-sm py-2 px-3 rounded whitespace-pre-line"
+                    className="bg-slate-900 text-white text-sm py-2 px-3 rounded-lg whitespace-pre-line"
                     side="top"
                     align="center"
                   >
                     {getBlockTooltipContent(block)}
-                    <Tooltip.Arrow className="fill-gray-800" />
+                    <Tooltip.Arrow className="fill-slate-900" />
                   </Tooltip.Content>
                 </Tooltip.Root>
               ))}
             </div>
 
-            <div className="flex gap-4 text-sm">
+            <div className="flex gap-6 text-sm justify-center pt-2">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded" />
-                <span>Flight</span>
+                <div className="w-3 h-3 bg-green-600 rounded" />
+                <span className="text-slate-600">Flight</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-purple-500 rounded" />
-                <span>Turnaround</span>
+                <div className="w-3 h-3 bg-purple-400 rounded" />
+                <span className="text-slate-600">Turnaround</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-gray-300 rounded" />
-                <span>Idle</span>
+                <div className="w-3 h-3 bg-gray-200 rounded" />
+                <span className="text-slate-600">Idle</span>
               </div>
             </div>
           </div>
         </Tooltip.Provider>
       )}
-    </div>
+    </Card>
   );
 };

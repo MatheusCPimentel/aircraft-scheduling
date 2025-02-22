@@ -60,7 +60,7 @@ export const Aircrafts = ({
       {isLoading ? (
         <AircraftsShimmer />
       ) : (
-        <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
+        <div className="flex flex-col gap-4 w-full overflow-y-auto pr-3">
           {aircrafts.map((aircraft) => {
             const isSelected = selectedAircraft?.ident === aircraft.ident;
             const rotation = allRotations[aircraft.ident] || [];
@@ -69,22 +69,32 @@ export const Aircrafts = ({
             return (
               <div
                 key={aircraft.ident}
-                className={`flex items-center justify-between p-4 border rounded-md hover:border-blue-500 cursor-pointer ${
-                  isSelected ? "border-blue-500 bg-blue-50" : ""
-                }`}
+                className={`flex items-center justify-between p-4 border rounded-xl bg-white transition-all duration-200
+                  ${
+                    isSelected
+                      ? "border-blue-500 bg-blue-50"
+                      : "hover:border-blue-500 hover:shadow-sm"
+                  } cursor-pointer`}
                 onClick={() => onSelect(aircraft)}
               >
-                <div className="flex flex-col gap-1">
-                  <span className="font-medium">Aircraft {aircraft.type}</span>
+                <div className="flex flex-col gap-2">
+                  <span className="font-medium text-slate-900">
+                    Aircraft {aircraft.type}
+                  </span>
 
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-slate-500">
                     {formatUtilization(utilization)}
                   </span>
                 </div>
 
-                <div className="flex flex-col items-end text-sm text-gray-500">
-                  <span>{aircraft.ident}</span>
-                  <span>{aircraft.base}</span>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="font-medium text-slate-700">
+                    {aircraft.ident}
+                  </span>
+
+                  <span className="text-sm text-slate-500">
+                    {aircraft.base}
+                  </span>
                 </div>
               </div>
             );

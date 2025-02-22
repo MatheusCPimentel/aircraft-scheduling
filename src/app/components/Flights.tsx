@@ -8,6 +8,7 @@ import { AircraftRotations } from "@/types/rotation";
 import { fetchWrapper } from "@/services/api";
 import { FlightsShimmer } from "./shimmer/FlightsShimmer";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { Plus, MoveRight } from "lucide-react";
 
 interface FlightAvailability {
   available: boolean;
@@ -147,7 +148,7 @@ export const Flights = ({
         {isLoading ? (
           <FlightsShimmer />
         ) : (
-          <div className="flex flex-col gap-4 w-full overflow-y-auto overflow-x-visible pr-4 -mr-4">
+          <div className="flex flex-col gap-4 w-full overflow-y-auto pr-3">
             {flights.map((flight) => {
               const availability = checkFlightAvailability(flight);
 
@@ -155,37 +156,54 @@ export const Flights = ({
                 <Tooltip.Root key={flight.ident} delayDuration={0}>
                   <Tooltip.Trigger asChild>
                     <div
-                      className={`flex items-center w-full justify-between p-3 border rounded-md group relative
+                      className={`flex items-center w-full justify-between p-4 border rounded-xl bg-white transition-all duration-200
                         ${
                           !availability.available
                             ? "opacity-50 cursor-not-allowed"
-                            : "hover:border-blue-500 cursor-pointer"
+                            : "hover:border-blue-500 hover:shadow-sm cursor-pointer"
                         }
                       `}
                       onClick={() =>
                         availability.available && onAddFlight(flight)
                       }
                     >
-                      <div className="w-full flex flex-col gap-2">
+                      <div className="w-full flex flex-col gap-3">
                         <div className="flex justify-between items-center">
-                          <span className="font-medium">{flight.ident}</span>
+                          <span className="font-medium text-slate-900">
+                            {flight.ident}
+                          </span>
 
                           {availability.available && (
-                            <span className="text-sm text-blue-500">
-                              Click to add
+                            <span className="text-sm text-blue-500 flex items-center gap-1">
+                              <Plus className="w-4 h-4" />
+                              Add to rotation
                             </span>
                           )}
                         </div>
 
-                        <div className="flex items-center justify-between gap-4 text-sm text-gray-500">
-                          <div className="flex flex-col items-center">
-                            <p className="font-medium">{flight.origin}</p>
-                            <p>{flight.readable_departure}</p>
+                        <div className="flex items-center justify-between gap-4 bg-slate-50 p-3 rounded-lg">
+                          <div className="text-center">
+                            <p className="font-medium text-slate-900">
+                              {flight.origin}
+                            </p>
+
+                            <p className="text-slate-500 text-sm">
+                              {flight.readable_departure}
+                            </p>
                           </div>
 
-                          <div className="flex flex-col items-center">
-                            <p className="font-medium">{flight.destination}</p>
-                            <p>{flight.readable_arrival}</p>
+                          <div className="text-slate-400">
+                            <MoveRight className="w-6 h-6" />
+                          </div>
+
+                          <div className="text-center">
+                            <p className="font-medium text-slate-900">
+                              {flight.destination}
+                            </p>
+
+                            <p className="text-slate-500 text-sm">
+                              {flight.readable_arrival}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -194,11 +212,11 @@ export const Flights = ({
 
                   {!availability.available && availability.reason && (
                     <Tooltip.Content
-                      className="bg-gray-800 text-white text-sm py-1 px-3 rounded"
+                      className="bg-slate-900 text-white text-sm py-2 px-3 rounded-lg"
                       side="top"
                     >
                       {availability.reason}
-                      <Tooltip.Arrow className="fill-gray-800" />
+                      <Tooltip.Arrow className="fill-slate-900" />
                     </Tooltip.Content>
                   )}
                 </Tooltip.Root>

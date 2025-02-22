@@ -4,6 +4,7 @@ import { Flight } from "@/types/flight";
 import { Card } from "./Card";
 import { Aircraft } from "@/types/aircraft";
 import { formatDateWithOrdinal, getTomorrowDate } from "@/utils/date";
+import { X, MoveRight } from "lucide-react";
 
 interface RotationProps {
   selectedAircraft: Aircraft | null;
@@ -27,7 +28,7 @@ export const Rotation = ({
           Select an aircraft to start planning its rotation
         </p>
       ) : (
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full overflow-y-auto pr-3">
           {currentRotation.length === 0 ? (
             <p className="text-gray-500 text-center py-4">
               No flights in rotation. Add flights from the list on the right.
@@ -36,39 +37,43 @@ export const Rotation = ({
             currentRotation.map((flight) => (
               <div
                 key={flight.ident}
-                className="flex items-center justify-between p-4 border rounded-md"
+                className="flex items-center justify-between p-4 border rounded-xl bg-white"
               >
                 <div className="flex flex-col w-full gap-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">
-                      Flight: {flight.ident}
+                    <span className="text-gray-500 font-medium">
+                      Flight {flight.ident}
                     </span>
 
                     <button
                       onClick={() => onRemoveFlight(flight)}
-                      className="py-2 px-3 text-lg text-red-500 hover:bg-red-50 rounded-full"
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors duration-200"
+                      aria-label="Remove flight"
                     >
-                      ✕
+                      <X className="w-5 h-5" />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-xl">{flight.origin}</p>
+                  <div className="flex items-center justify-between bg-slate-50 p-4 rounded-lg">
+                    <div className="text-center">
+                      <p className="font-medium text-xl text-slate-900">
+                        {flight.origin}
+                      </p>
 
-                      <p className="text-gray-500 text-lg">
+                      <p className="text-slate-500 text-base">
                         {flight.readable_departure}
                       </p>
                     </div>
 
-                    <div className="text-gray-400 text-5xl">➔</div>
+                    <div className="text-slate-400">
+                      <MoveRight className="w-8 h-8" />
+                    </div>
 
-                    <div>
-                      <p className="font-medium text-xl">
+                    <div className="text-center">
+                      <p className="font-medium text-xl text-slate-900">
                         {flight.destination}
                       </p>
-
-                      <p className="text-gray-500 text-lg">
+                      <p className="text-slate-500">
                         {flight.readable_arrival}
                       </p>
                     </div>
