@@ -1,11 +1,11 @@
 "use client";
 
-import { fetchFlights } from "@/utils/fetchFlights";
 import { Card } from "./Card";
 import { Flight } from "@/types/flight";
 import { Aircraft } from "@/types/aircraft";
 import { useState, useEffect } from "react";
 import { AircraftRotations } from "@/types/rotation";
+import { fetchWrapper } from "@/services/api";
 
 interface FlightAvailability {
   available: boolean;
@@ -32,12 +32,12 @@ export const Flights = ({
     : [];
 
   useEffect(() => {
-    const fetch = async () => {
-      const flights = (await fetchFlights()) as Flight[];
-      setFlights(flights);
+    const fetchFlights = async () => {
+      const { data } = await fetchWrapper<Flight[]>("flights");
+      setFlights(data);
     };
 
-    fetch();
+    fetchFlights();
   }, []);
 
   const findAircraftUsingFlight = (flight: Flight): string | null => {

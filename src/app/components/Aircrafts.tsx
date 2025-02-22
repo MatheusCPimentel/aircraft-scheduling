@@ -1,10 +1,10 @@
 "use client";
 
-import { fetchAircrafts } from "@/utils/fetchAircrafts";
 import { Card } from "./Card";
 import { Aircraft } from "@/types/aircraft";
 import { Flight } from "@/types/flight";
 import { useState, useEffect } from "react";
+import { fetchWrapper } from "@/services/api";
 
 interface AircraftsProps {
   selectedAircraft: Aircraft | null;
@@ -23,12 +23,12 @@ export const Aircrafts = ({
   const [aircrafts, setAircrafts] = useState<Aircraft[]>([]);
 
   useEffect(() => {
-    const fetch = async () => {
-      const aircrafts = (await fetchAircrafts()) as Aircraft[];
-      setAircrafts(aircrafts);
+    const fetchAircrafts = async () => {
+      const { data } = await fetchWrapper<Aircraft[]>("aircrafts");
+      setAircrafts(data);
     };
 
-    fetch();
+    fetchAircrafts();
   }, []);
 
   const calculateUtilization = (flights: Flight[]): number => {
