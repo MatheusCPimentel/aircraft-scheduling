@@ -6,25 +6,60 @@ import { Flights } from "./components/Flights";
 import { Timeline } from "./components/Timeline";
 import { useState } from "react";
 import { Aircraft } from "@/types/aircraft";
+import { Flight } from "@/types/flight";
+import { AircraftRotations } from "@/types/rotation";
 
 export default function Home() {
   const [selectedAircraft, setSelectedAircraft] = useState<Aircraft | null>(
     null
   );
 
+  const [allRotations, setAllRotations] = useState<AircraftRotations>({});
+
+  const currentRotation = selectedAircraft
+    ? allRotations[selectedAircraft.ident] || []
+    : [];
+
+  const handleFlightChange = (flight: Flight, action: "add" | "remove") => {
+    if (!selectedAircraft) return;
+
+    const newRotation =
+      action === "add"
+        ? [...currentRotation, flight]
+        : currentRotation.filter((f) => f.ident !== flight.ident);
+
+    setAllRotations({
+      ...allRotations,
+      [selectedAircraft.ident]: newRotation,
+    });
+  };
+
   return (
     <main className="h-full grid grid-cols-1 gap-4 lg:grid-cols-[30fr_50fr_20fr] lg:gap-6">
       <Aircrafts
         onSelect={setSelectedAircraft}
         selectedAircraft={selectedAircraft}
+        allRotations={allRotations}
       />
 
       <div className="flex flex-col gap-4">
-        <Rotation />
-        {/* <Timeline /> */}
+        <Rotation
+          selectedAircraft={selectedAircraft}
+          currentRotation={currentRotation}
+          onRemoveFlight={(flight) => handleFlightChange(flight, "remove")}
+        />
+
+        <Timeline
+          selectedAircraft={selectedAircraft}
+          currentRotation={currentRotation}
+        />
       </div>
 
-      <Flights />
+      <Flights
+        selectedAircraft={selectedAircraft}
+        onAddFlight={(flight) => handleFlightChange(flight, "add")}
+        allRotations={allRotations}
+      />
     </main>
   );
 }
