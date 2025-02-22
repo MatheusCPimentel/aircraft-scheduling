@@ -6,6 +6,7 @@ import { Flight } from "@/types/flight";
 import { useState, useEffect } from "react";
 import { fetchWrapper } from "@/services/api";
 import { AircraftsShimmer } from "./shimmer/AircraftsShimmer";
+import { SECONDS_IN_DAY, TURNAROUND_TIME_SECONDS } from "@/utils/date";
 
 interface AircraftsProps {
   selectedAircraft: Aircraft | null;
@@ -18,9 +19,6 @@ export const Aircrafts = ({
   onSelect,
   allRotations,
 }: AircraftsProps) => {
-  const TURNAROUND_TIME = 20 * 60;
-  const SECONDS_IN_DAY = 24 * 60 * 60;
-
   const [aircrafts, setAircrafts] = useState<Aircraft[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,7 +42,7 @@ export const Aircrafts = ({
       return acc + (flight.arrivaltime - flight.departuretime);
     }, 0);
 
-    const totalTurnaroundTime = (flights.length - 1) * TURNAROUND_TIME;
+    const totalTurnaroundTime = (flights.length - 1) * TURNAROUND_TIME_SECONDS;
 
     return ((totalFlightTime + totalTurnaroundTime) / SECONDS_IN_DAY) * 100;
   };

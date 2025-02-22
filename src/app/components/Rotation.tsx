@@ -3,6 +3,7 @@
 import { Flight } from "@/types/flight";
 import { Card } from "./Card";
 import { Aircraft } from "@/types/aircraft";
+import { formatDateWithOrdinal, getTomorrowDate } from "@/utils/date";
 
 interface RotationProps {
   selectedAircraft: Aircraft | null;
@@ -15,9 +16,11 @@ export const Rotation = ({
   currentRotation,
   onRemoveFlight,
 }: RotationProps) => {
+  const rotationDate = formatDateWithOrdinal(getTomorrowDate());
+
   return (
     <Card className="gap-4 min-h-[550px]">
-      <h2 className="text-lg font-semibold">Rotation</h2>
+      <h2 className="text-lg font-semibold">Rotation - {rotationDate}</h2>
 
       {!selectedAircraft ? (
         <p className="text-gray-500 text-center py-4">

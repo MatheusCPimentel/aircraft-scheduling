@@ -4,6 +4,11 @@ import { Flight } from "@/types/flight";
 import { Aircraft } from "@/types/aircraft";
 import { TimeBlock } from "@/types/rotation";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import {
+  SECONDS_IN_DAY,
+  TURNAROUND_TIME_SECONDS,
+  formatTime,
+} from "@/utils/date";
 
 interface TimelineProps {
   selectedAircraft: Aircraft | null;
@@ -14,9 +19,6 @@ export const Timeline = ({
   selectedAircraft,
   currentRotation,
 }: TimelineProps) => {
-  const SECONDS_IN_DAY = 24 * 60 * 60;
-  const TURNAROUND_TIME = 20 * 60;
-
   const calculateTimeBlocks = (): TimeBlock[] => {
     if (!currentRotation.length) {
       return [{ type: "idle", start: 0, end: SECONDS_IN_DAY }];
@@ -45,10 +47,10 @@ export const Timeline = ({
         blocks.push({
           type: "turnaround",
           start: flight.arrivaltime,
-          end: flight.arrivaltime + TURNAROUND_TIME,
+          end: flight.arrivaltime + TURNAROUND_TIME_SECONDS,
         });
 
-        currentTime = flight.arrivaltime + TURNAROUND_TIME;
+        currentTime = flight.arrivaltime + TURNAROUND_TIME_SECONDS;
       } else {
         currentTime = flight.arrivaltime;
       }
@@ -79,11 +81,6 @@ export const Timeline = ({
   const getBlockWidth = (start: number, end: number): string => {
     const percentage = ((end - start) / SECONDS_IN_DAY) * 100;
     return `${percentage}%`;
-  };
-
-  const formatTime = (seconds: number): string => {
-    const date = new Date(seconds * 1000);
-    return date.toISOString().substring(11, 16);
   };
 
   const getBlockTooltipContent = (block: TimeBlock): string => {
