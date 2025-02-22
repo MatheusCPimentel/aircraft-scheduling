@@ -16,20 +16,18 @@ interface FlightsProps {
   selectedAircraft: Aircraft | null;
   onAddFlight: (flight: Flight) => void;
   allRotations: AircraftRotations;
+  currentRotation: Flight[];
 }
 
 export const Flights = ({
   selectedAircraft,
   onAddFlight,
   allRotations,
+  currentRotation,
 }: FlightsProps) => {
   const TURNAROUND_TIME_IN_SECONDS = 20 * 60;
 
   const [flights, setFlights] = useState<Flight[]>([]);
-
-  const currentRotation = selectedAircraft
-    ? allRotations[selectedAircraft.ident] || []
-    : [];
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -44,7 +42,11 @@ export const Flights = ({
     if (!allRotations) return null;
 
     for (const [aircraftId, aircraftRotation] of Object.entries(allRotations)) {
-      if (aircraftRotation?.some((f) => f.ident === flight.ident)) {
+      if (
+        aircraftRotation?.some(
+          (existingFlight) => existingFlight.ident === flight.ident
+        )
+      ) {
         return aircraftId;
       }
     }

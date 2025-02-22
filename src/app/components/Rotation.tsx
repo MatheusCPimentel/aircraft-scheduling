@@ -52,6 +52,7 @@ export const Rotation = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium text-xl">{flight.origin}</p>
+
                       <p className="text-gray-500 text-lg">
                         {flight.readable_departure}
                       </p>
@@ -63,6 +64,7 @@ export const Rotation = ({
                       <p className="font-medium text-xl">
                         {flight.destination}
                       </p>
+
                       <p className="text-gray-500 text-lg">
                         {flight.readable_arrival}
                       </p>

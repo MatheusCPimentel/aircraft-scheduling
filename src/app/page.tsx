@@ -26,7 +26,9 @@ export default function Home() {
     const newRotation =
       action === "add"
         ? [...currentRotation, flight]
-        : currentRotation.filter((f) => f.ident !== flight.ident);
+        : currentRotation.filter(
+            (existingFlight) => existingFlight.ident !== flight.ident
+          );
 
     setAllRotations({
       ...allRotations,
@@ -59,6 +61,7 @@ export default function Home() {
         selectedAircraft={selectedAircraft}
         onAddFlight={(flight) => handleFlightChange(flight, "add")}
         allRotations={allRotations}
+        currentRotation={currentRotation}
       />
     </main>
   );

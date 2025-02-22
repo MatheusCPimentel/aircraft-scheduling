@@ -45,6 +45,7 @@ export const Aircrafts = ({
 
   const formatUtilization = (utilization: number) => {
     if (utilization === 0) return "No flights scheduled";
+
     return `${utilization.toFixed(2)}% Utilization`;
   };
 
