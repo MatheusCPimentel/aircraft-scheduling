@@ -6,6 +6,7 @@ import { Aircraft } from "@/types/aircraft";
 import { useState, useEffect } from "react";
 import { AircraftRotations } from "@/types/rotation";
 import { fetchWrapper } from "@/services/api";
+import { FlightsShimmer } from "./shimmer/FlightsShimmer";
 
 interface FlightAvailability {
   available: boolean;
@@ -28,11 +29,16 @@ export const Flights = ({
   const TURNAROUND_TIME_IN_SECONDS = 20 * 60;
 
   const [flights, setFlights] = useState<Flight[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFlights = async () => {
-      const { data } = await fetchWrapper<Flight[]>("flights");
-      setFlights(data);
+      try {
+        const { data } = await fetchWrapper<Flight[]>("flights");
+        setFlights(data);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchFlights();
@@ -135,53 +141,59 @@ export const Flights = ({
     <Card className="gap-4">
       <h2 className="text-lg font-semibold">Flights</h2>
 
-      <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
-        {flights.map((flight) => {
-          const availability = checkFlightAvailability(flight);
+      {isLoading ? (
+        <FlightsShimmer />
+      ) : (
+        <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
+          {flights.map((flight) => {
+            const availability = checkFlightAvailability(flight);
 
-          return (
-            <div
-              key={flight.ident}
-              className={`flex items-center w-full justify-between p-3 border rounded-md group relative
-                ${
-                  !availability.available
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:border-blue-500 cursor-pointer"
-                }
-              `}
-              onClick={() => availability.available && onAddFlight(flight)}
-            >
-              <div className="w-full flex flex-col gap-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">{flight.ident}</span>
+            return (
+              <div
+                key={flight.ident}
+                className={`flex items-center w-full justify-between p-3 border rounded-md group relative
+                  ${
+                    !availability.available
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:border-blue-500 cursor-pointer"
+                  }
+                `}
+                onClick={() => availability.available && onAddFlight(flight)}
+              >
+                <div className="w-full flex flex-col gap-2">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">{flight.ident}</span>
 
-                  {availability.available && (
-                    <span className="text-sm text-blue-500">Click to add</span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between gap-4 text-sm text-gray-500">
-                  <div className="flex flex-col items-center">
-                    <p className="font-medium">{flight.origin}</p>
-                    <p>{flight.readable_departure}</p>
+                    {availability.available && (
+                      <span className="text-sm text-blue-500">
+                        Click to add
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex flex-col items-center">
-                    <p className="font-medium">{flight.destination}</p>
-                    <p>{flight.readable_arrival}</p>
+                  <div className="flex items-center justify-between gap-4 text-sm text-gray-500">
+                    <div className="flex flex-col items-center">
+                      <p className="font-medium">{flight.origin}</p>
+                      <p>{flight.readable_departure}</p>
+                    </div>
+
+                    <div className="flex flex-col items-center">
+                      <p className="font-medium">{flight.destination}</p>
+                      <p>{flight.readable_arrival}</p>
+                    </div>
                   </div>
                 </div>
+
+                {!availability.available && availability.reason && (
+                  <div className="absolute left-1/2 -translate-x-1/2 -top-14 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 text-white text-sm py-2 px-4 rounded-lg text-center mx-4 pointer-events-none shadow-lg before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:top-full before:border-8 before:border-transparent before:border-t-gray-800">
+                    {availability.reason}
+                  </div>
+                )}
               </div>
-
-              {!availability.available && availability.reason && (
-                <div className="absolute left-1/2 -translate-x-1/2 -top-14 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 text-white text-sm py-2 px-4 rounded-lg text-center mx-4 pointer-events-none  shadow-lg before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:top-full before:border-8 before:border-transparent before:border-t-gray-800">
-                  {availability.reason}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </Card>
   );
 };
