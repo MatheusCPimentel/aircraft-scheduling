@@ -18,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <div className="min-h-screen w-full mx-auto p-8 lg:p-4">{children}</div>
+      </body>
     </html>
   );
 }
