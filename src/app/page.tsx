@@ -37,7 +37,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-full grid grid-cols-1 gap-4 lg:grid-cols-[30fr_50fr_20fr] lg:gap-6">
+    <main className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_2fr_1fr] lg:gap-6">
       <Aircrafts
         onSelect={setSelectedAircraft}
         selectedAircraft={selectedAircraft}

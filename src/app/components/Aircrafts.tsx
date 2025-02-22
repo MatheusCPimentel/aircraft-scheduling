@@ -53,7 +53,7 @@ export const Aircrafts = ({
     <Card className="gap-4">
       <h2 className="text-lg font-semibold">Aircrafts</h2>
 
-      <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
         {aircrafts.map((aircraft) => {
           const isSelected = selectedAircraft?.ident === aircraft.ident;
           const rotation = allRotations[aircraft.ident] || [];

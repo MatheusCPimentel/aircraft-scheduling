@@ -135,7 +135,7 @@ export const Flights = ({
     <Card className="gap-4">
       <h2 className="text-lg font-semibold">Flights</h2>
 
-      <div className="flex flex-col gap-4 w-full max-h-[500px] overflow-y-auto">
+      <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
         {flights.map((flight) => {
           const availability = checkFlightAvailability(flight);
 
@@ -174,7 +174,7 @@ export const Flights = ({
               </div>
 
               {!availability.available && availability.reason && (
-                <div className="absolute left-0 right-0 -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-sm py-2 px-3 rounded-md text-center mx-4 pointer-events-none">
+                <div className="absolute left-1/2 -translate-x-1/2 -top-14 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 text-white text-sm py-2 px-4 rounded-lg text-center mx-4 pointer-events-none  shadow-lg before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:top-full before:border-8 before:border-transparent before:border-t-gray-800">
                   {availability.reason}
                 </div>
               )}

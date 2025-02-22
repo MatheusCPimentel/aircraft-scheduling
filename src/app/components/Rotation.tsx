@@ -16,7 +16,7 @@ export const Rotation = ({
   onRemoveFlight,
 }: RotationProps) => {
   return (
-    <Card className="gap-4">
+    <Card className="gap-4 min-h-[550px]">
       <h2 className="text-lg font-semibold">Rotation</h2>
 
       {!selectedAircraft ? (
