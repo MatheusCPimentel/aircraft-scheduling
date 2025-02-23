@@ -10,18 +10,18 @@ A modern web application built with Next.js and TypeScript for managing aircraft
 
 ## 📖 Table of Contents
 
-- [🚀 Features](#features)
-- [🛠️ Installation](#installation)
-- [🧪 Testing](#testing)
-- [🏗️ Project Structure](#project-structure)
-- [🔍 Key Features Explained](#key-features-explained)
+- [🚀 Features](#-features)
+- [🛠️ Installation](#-installation)
+- [🧪 Testing](#-testing)
+- [🏗️ Project Structure](#-project-structure)
+- [🔍 Key Features Explained](#-key-features-explained)
   - [Aircraft Selection](#aircraft-selection)
   - [Flight Management](#flight-management)
   - [Timeline Visualization](#timeline-visualization)
-- [🎨 Responsiveness and Media](#responsiveness-and-media)
+- [🎨 Responsiveness and Media](#-responsiveness-and-media)
   - [Mobile](#mobile)
   - [Desktop](#desktop)
-- [🙏 Acknowledgments](#acknowledgments)
+- [🙏 Acknowledgments](#-acknowledgments)
 
 ## 🚀 Features
 
