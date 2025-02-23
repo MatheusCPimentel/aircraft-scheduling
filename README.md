@@ -117,8 +117,8 @@ The app was built with a mobile-first approach to ensure excellent usability acr
 ### Mobile
 
 ![mobile-gif](./public/media/mobile/gif.gif)
-![image-02](./public/media/mobile/image-02.png)
 ![image-01](./public/media/mobile/image-01.png)
+![image-02](./public/media/mobile/image-02.png)
 
 ---
 
