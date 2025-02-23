@@ -8,7 +8,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Aircraft Scheduling",
-  description: "Aircraft Scheduling",
+  description:
+    "Plan your aircraft rotations efficiently with our scheduling tool.",
 };
 
 export default function RootLayout({

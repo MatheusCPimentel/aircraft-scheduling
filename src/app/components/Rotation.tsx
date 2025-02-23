@@ -27,6 +27,7 @@ export const Rotation = ({
         <h2 className="text-lg font-semibold sm:text-left">
           Rotation - {rotationDate}
         </h2>
+
         {selectedAircraft && currentRotation.length > 0 && (
           <button
             onClick={onResetRotation}
