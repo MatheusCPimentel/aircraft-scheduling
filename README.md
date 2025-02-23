@@ -79,9 +79,10 @@ npm run test:coverage
 src/
 ├── app/                  # Next.js app directory
 │   └── components/       # React components
-├── services/            # API services
-├── types/              # TypeScript type definitions
-└── utils/              # Utility functions
+├── services/             # API services
+├── test/                 # Test setup
+├── types/                # TypeScript type definitions
+└── utils/                # Utility functions
 ```
 
 ## 🔍 Key Features Explained
