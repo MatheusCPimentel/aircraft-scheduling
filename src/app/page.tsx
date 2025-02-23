@@ -45,33 +45,43 @@ export default function Home() {
   };
 
   return (
-    <main className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_2fr_1fr] lg:gap-6">
-      <Aircrafts
-        onSelect={setSelectedAircraft}
-        selectedAircraft={selectedAircraft}
-        allRotations={allRotations}
-      />
+    <div>
+      <header className="flex flex-col gap-2 mb-4">
+        <h1 className="text-2xl font-bold">Aircraft Scheduling</h1>
 
-      <div className="flex flex-col gap-4">
-        <Rotation
+        <p className="text-slate-500">
+          Plan your aircraft rotations efficiently with our scheduling tool.
+        </p>
+      </header>
+
+      <main className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_2fr_1fr] lg:gap-6">
+        <Aircrafts
+          onSelect={setSelectedAircraft}
           selectedAircraft={selectedAircraft}
-          currentRotation={currentRotation}
-          onRemoveFlight={(flight) => handleFlightChange(flight, "remove")}
-          onResetRotation={handleResetRotation}
+          allRotations={allRotations}
         />
 
-        <Timeline
+        <div className="flex flex-col gap-4">
+          <Rotation
+            selectedAircraft={selectedAircraft}
+            currentRotation={currentRotation}
+            onRemoveFlight={(flight) => handleFlightChange(flight, "remove")}
+            onResetRotation={handleResetRotation}
+          />
+
+          <Timeline
+            selectedAircraft={selectedAircraft}
+            currentRotation={currentRotation}
+          />
+        </div>
+
+        <Flights
           selectedAircraft={selectedAircraft}
+          onAddFlight={(flight) => handleFlightChange(flight, "add")}
+          allRotations={allRotations}
           currentRotation={currentRotation}
         />
-      </div>
-
-      <Flights
-        selectedAircraft={selectedAircraft}
-        onAddFlight={(flight) => handleFlightChange(flight, "add")}
-        allRotations={allRotations}
-        currentRotation={currentRotation}
-      />
-    </main>
+      </main>
+    </div>
   );
 }
