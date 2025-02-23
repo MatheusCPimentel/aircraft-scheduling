@@ -2,7 +2,10 @@ import { ShimmerBlock } from "./base";
 
 export const FlightsShimmer = () => {
   return (
-    <div className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4">
+    <div
+      data-testid="flights-shimmer"
+      className="flex flex-col gap-4 w-full overflow-y-auto pr-4 -mr-4"
+    >
       {[...Array(12)].map((_, index) => (
         <div
           key={index}

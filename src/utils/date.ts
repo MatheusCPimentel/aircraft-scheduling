@@ -1,7 +1,8 @@
 export const SECONDS_IN_DAY = 24 * 60 * 60;
 export const TURNAROUND_TIME_SECONDS = 20 * 60;
-const ONE_SECOND_IN_MILLISECONDS = 1000;
-const ONE_DAY_IN_MILLISECONDS = SECONDS_IN_DAY * ONE_SECOND_IN_MILLISECONDS;
+export const ONE_SECOND_IN_MILLISECONDS = 1000;
+export const ONE_DAY_IN_MILLISECONDS =
+  SECONDS_IN_DAY * ONE_SECOND_IN_MILLISECONDS;
 
 export const getOrdinalSuffix = (day: number): string => {
   if (day > 3 && day < 21) return "th";

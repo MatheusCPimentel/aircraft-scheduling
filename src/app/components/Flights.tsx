@@ -39,6 +39,9 @@ export const Flights = ({
       try {
         const { data } = await fetchWrapper<Flight[]>("flights");
         setFlights(data);
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+        setFlights([]);
       } finally {
         setIsLoading(false);
       }
