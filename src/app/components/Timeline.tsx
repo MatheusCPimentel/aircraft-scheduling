@@ -105,7 +105,7 @@ export const Timeline = ({
 
   return (
     <Card className="p-4">
-      <h2 className="text-lg font-semibold mb-4">Timeline</h2>
+      <h2 className="text-lg font-semibold mb-4 sm:text-left">Timeline</h2>
 
       {!selectedAircraft ? (
         <p className="text-slate-500 text-center py-8">

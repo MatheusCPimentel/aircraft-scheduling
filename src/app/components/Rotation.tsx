@@ -23,8 +23,10 @@ export const Rotation = ({
 
   return (
     <Card className="gap-4 min-h-[550px]">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Rotation - {rotationDate}</h2>
+      <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-lg font-semibold sm:text-left">
+          Rotation - {rotationDate}
+        </h2>
         {selectedAircraft && currentRotation.length > 0 && (
           <button
             onClick={onResetRotation}

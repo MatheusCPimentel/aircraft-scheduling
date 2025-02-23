@@ -58,7 +58,7 @@ export const Aircrafts = ({
 
   return (
     <Card className="gap-4">
-      <h2 className="text-lg font-semibold">Aircrafts</h2>
+      <h2 className="text-lg font-semibold sm:text-left">Aircrafts</h2>
 
       {isLoading ? (
         <AircraftsShimmer />
@@ -80,7 +80,7 @@ export const Aircrafts = ({
                   } cursor-pointer`}
                 onClick={() => onSelect(aircraft)}
               >
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 text-left">
                   <span className="font-medium text-slate-900">
                     Aircraft {aircraft.type}
                   </span>
