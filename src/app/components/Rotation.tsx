@@ -22,7 +22,7 @@ export const Rotation = ({
   const rotationDate = formatDateWithOrdinal(getTomorrowDate());
 
   return (
-    <Card className="gap-4 min-h-[550px]">
+    <Card className="gap-4 xl:min-h-[550px]">
       <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-lg font-semibold sm:text-left">
           Rotation - {rotationDate}
@@ -40,13 +40,13 @@ export const Rotation = ({
       </div>
 
       {!selectedAircraft ? (
-        <p className="text-gray-500 text-center py-4">
+        <p className="text-gray-500 text-center py-8">
           Select an aircraft to start planning its rotation
         </p>
       ) : (
         <div className="flex flex-col gap-4 w-full overflow-y-auto pr-3">
           {currentRotation.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">
+            <p className="text-gray-500 text-center py-8">
               No flights in rotation. Add flights from the list on the right.
             </p>
           ) : (
