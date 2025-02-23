@@ -112,7 +112,7 @@ export const Timeline = ({
           Select an aircraft to view its timeline
         </p>
       ) : (
-        <Tooltip.Provider>
+        <Tooltip.Provider disableHoverableContent>
           <div className="flex flex-col gap-4">
             <div className="flex justify-between text-sm text-slate-500 px-1">
               {hoursToDisplay.map((hour) => (

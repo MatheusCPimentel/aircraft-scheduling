@@ -144,7 +144,7 @@ export const Flights = ({
   };
 
   return (
-    <Tooltip.Provider>
+    <Tooltip.Provider disableHoverableContent>
       <Card className="gap-4">
         <h2 className="text-lg font-semibold sm:text-left">Flights</h2>
 
