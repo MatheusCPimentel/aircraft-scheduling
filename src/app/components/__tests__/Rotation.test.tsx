@@ -4,6 +4,7 @@ import { mockAircraft, mockFlight } from "@/test/utils";
 
 describe("Rotation", () => {
   const onRemoveFlight = jest.fn();
+  const onResetRotation = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -15,10 +16,12 @@ describe("Rotation", () => {
         selectedAircraft={null}
         currentRotation={[]}
         onRemoveFlight={onRemoveFlight}
+        onResetRotation={onResetRotation}
       />
     );
 
     expect(screen.getByText(/select an aircraft/i)).toBeInTheDocument();
+    expect(screen.queryByText(/reset rotation/i)).not.toBeInTheDocument();
   });
 
   it("shows empty rotation message when aircraft is selected but no flights", () => {
@@ -27,10 +30,12 @@ describe("Rotation", () => {
         selectedAircraft={mockAircraft}
         currentRotation={[]}
         onRemoveFlight={onRemoveFlight}
+        onResetRotation={onResetRotation}
       />
     );
 
     expect(screen.getByText(/no flights in rotation/i)).toBeInTheDocument();
+    expect(screen.getByText(/reset rotation/i)).toBeInTheDocument();
   });
 
   it("displays flight information correctly", () => {
@@ -39,6 +44,7 @@ describe("Rotation", () => {
         selectedAircraft={mockAircraft}
         currentRotation={[mockFlight]}
         onRemoveFlight={onRemoveFlight}
+        onResetRotation={onResetRotation}
       />
     );
 
@@ -55,6 +61,7 @@ describe("Rotation", () => {
         selectedAircraft={mockAircraft}
         currentRotation={[mockFlight]}
         onRemoveFlight={onRemoveFlight}
+        onResetRotation={onResetRotation}
       />
     );
 
@@ -64,12 +71,29 @@ describe("Rotation", () => {
     expect(onRemoveFlight).toHaveBeenCalledWith(mockFlight);
   });
 
+  it("calls onResetRotation when reset button is clicked", () => {
+    render(
+      <Rotation
+        selectedAircraft={mockAircraft}
+        currentRotation={[mockFlight]}
+        onRemoveFlight={onRemoveFlight}
+        onResetRotation={onResetRotation}
+      />
+    );
+
+    const resetButton = screen.getByRole("button", { name: /reset rotation/i });
+    fireEvent.click(resetButton);
+
+    expect(onResetRotation).toHaveBeenCalled();
+  });
+
   it("displays rotation date", () => {
     render(
       <Rotation
         selectedAircraft={mockAircraft}
         currentRotation={[]}
         onRemoveFlight={onRemoveFlight}
+        onResetRotation={onResetRotation}
       />
     );
 

@@ -36,6 +36,14 @@ export default function Home() {
     });
   };
 
+  const handleResetRotation = () => {
+    if (!selectedAircraft) return;
+
+    const newRotations = { ...allRotations };
+    delete newRotations[selectedAircraft.ident];
+    setAllRotations(newRotations);
+  };
+
   return (
     <main className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_2fr_1fr] lg:gap-6">
       <Aircrafts
@@ -49,6 +57,7 @@ export default function Home() {
           selectedAircraft={selectedAircraft}
           currentRotation={currentRotation}
           onRemoveFlight={(flight) => handleFlightChange(flight, "remove")}
+          onResetRotation={handleResetRotation}
         />
 
         <Timeline

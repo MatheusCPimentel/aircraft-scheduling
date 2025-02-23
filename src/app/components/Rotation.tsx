@@ -4,24 +4,37 @@ import { Flight } from "@/types/flight";
 import { Card } from "./Card";
 import { Aircraft } from "@/types/aircraft";
 import { formatDateWithOrdinal, getTomorrowDate } from "@/utils/date";
-import { X, MoveRight } from "lucide-react";
+import { X, MoveRight, RotateCcw } from "lucide-react";
 
 interface RotationProps {
   selectedAircraft: Aircraft | null;
   currentRotation: Flight[];
   onRemoveFlight: (flight: Flight) => void;
+  onResetRotation: () => void;
 }
 
 export const Rotation = ({
   selectedAircraft,
   currentRotation,
   onRemoveFlight,
+  onResetRotation,
 }: RotationProps) => {
   const rotationDate = formatDateWithOrdinal(getTomorrowDate());
 
   return (
     <Card className="gap-4 min-h-[550px]">
-      <h2 className="text-lg font-semibold">Rotation - {rotationDate}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Rotation - {rotationDate}</h2>
+        {selectedAircraft && currentRotation.length > 0 && (
+          <button
+            onClick={onResetRotation}
+            className="flex items-center gap-2 px-3 py-2 text-red-500 hover:text-red-50 hover:bg-red-500 rounded-lg text-sm font-medium transition-all duration-200"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reset Rotation for this Aircraft
+          </button>
+        )}
+      </div>
 
       {!selectedAircraft ? (
         <p className="text-gray-500 text-center py-4">
