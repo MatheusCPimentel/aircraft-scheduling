@@ -4,7 +4,7 @@ import { Card } from "./Card";
 import { Aircraft } from "@/types/aircraft";
 import { Flight } from "@/types/flight";
 import { useState, useEffect } from "react";
-import { fetchWrapper } from "@/services/api";
+import { getLocalData } from "@/services/getLocalData";
 import { AircraftsShimmer } from "./shimmer/AircraftsShimmer";
 import { SECONDS_IN_DAY, TURNAROUND_TIME_SECONDS } from "@/utils/date";
 
@@ -25,7 +25,7 @@ export const Aircrafts = ({
   useEffect(() => {
     const fetchAircrafts = async () => {
       try {
-        const { data } = await fetchWrapper<Aircraft[]>("aircrafts");
+        const { data } = await getLocalData<Aircraft[]>("aircrafts");
         setAircrafts(data);
       } catch (error) {
         console.error("Failed to fetch aircrafts:", error);

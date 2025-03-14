@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@/test/utils";
 import { Aircrafts } from "../Aircrafts";
 import { mockAircraft, mockFlight } from "@/test/utils";
-import { fetchWrapper } from "@/services/api";
+import { getLocalData } from "@/services/getLocalData";
 
-jest.mock("@/services/api");
+jest.mock("@/services/localData");
 
 describe("Aircrafts", () => {
   const mockOnSelect = jest.fn();
@@ -14,7 +14,7 @@ describe("Aircrafts", () => {
   });
 
   it("shows loading state initially", () => {
-    (fetchWrapper as jest.Mock).mockImplementation(() => new Promise(() => {}));
+    (getLocalData as jest.Mock).mockImplementation(() => new Promise(() => {}));
 
     render(
       <Aircrafts
@@ -27,9 +27,11 @@ describe("Aircrafts", () => {
     expect(screen.getByTestId("aircrafts-shimmer")).toBeInTheDocument();
   });
 
-  it("displays aircraft information correctly", async () => {
-    (fetchWrapper as jest.Mock).mockResolvedValue({
-      data: [mockAircraft],
+  it("renders aircrafts correctly", async () => {
+    const mockAircrafts = [mockAircraft];
+    (getLocalData as jest.Mock).mockResolvedValue({
+      data: mockAircrafts,
+      responseInfo: { status: 200, statusText: "OK", url: "local://aircrafts" },
     });
 
     render(
@@ -52,8 +54,10 @@ describe("Aircrafts", () => {
   });
 
   it("handles aircraft selection", async () => {
-    (fetchWrapper as jest.Mock).mockResolvedValue({
-      data: [mockAircraft],
+    const mockAircrafts = [mockAircraft];
+    (getLocalData as jest.Mock).mockResolvedValue({
+      data: mockAircrafts,
+      responseInfo: { status: 200, statusText: "OK", url: "local://aircrafts" },
     });
 
     render(
@@ -80,8 +84,10 @@ describe("Aircrafts", () => {
   });
 
   it("shows selected state correctly", async () => {
-    (fetchWrapper as jest.Mock).mockResolvedValue({
-      data: [mockAircraft],
+    const mockAircrafts = [mockAircraft];
+    (getLocalData as jest.Mock).mockResolvedValue({
+      data: mockAircrafts,
+      responseInfo: { status: 200, statusText: "OK", url: "local://aircrafts" },
     });
 
     render(
@@ -114,8 +120,10 @@ describe("Aircrafts", () => {
       [mockAircraft.ident]: [mockFlight],
     };
 
-    (fetchWrapper as jest.Mock).mockResolvedValue({
-      data: [mockAircraft],
+    const mockAircrafts = [mockAircraft];
+    (getLocalData as jest.Mock).mockResolvedValue({
+      data: mockAircrafts,
+      responseInfo: { status: 200, statusText: "OK", url: "local://aircrafts" },
     });
 
     render(
@@ -132,7 +140,7 @@ describe("Aircrafts", () => {
   });
 
   it("handles API error gracefully", async () => {
-    (fetchWrapper as jest.Mock).mockRejectedValue(new Error("API Error"));
+    (getLocalData as jest.Mock).mockRejectedValue(new Error("API Error"));
 
     render(
       <Aircrafts

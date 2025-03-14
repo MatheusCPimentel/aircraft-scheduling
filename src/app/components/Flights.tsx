@@ -5,7 +5,7 @@ import { Flight } from "@/types/flight";
 import { Aircraft } from "@/types/aircraft";
 import { useState, useEffect } from "react";
 import { AircraftRotations } from "@/types/rotation";
-import { fetchWrapper } from "@/services/api";
+import { getLocalData } from "@/services/getLocalData";
 import { FlightsShimmer } from "./shimmer/FlightsShimmer";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Plus, MoveRight } from "lucide-react";
@@ -37,7 +37,7 @@ export const Flights = ({
   useEffect(() => {
     const fetchFlights = async () => {
       try {
-        const { data } = await fetchWrapper<Flight[]>("flights");
+        const { data } = await getLocalData<Flight[]>("flights");
         setFlights(data);
       } catch (error) {
         console.error("Failed to fetch flights:", error);

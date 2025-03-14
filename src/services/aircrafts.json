@@ -1,0 +1,38 @@
+[
+  {
+    "ident": "N123NB",
+    "type": "A320",
+    "economySeats": 100,
+    "base": "EGKK"
+  },
+  {
+    "ident": "N123NM",
+    "type": "A320",
+    "economySeats": 186,
+    "base": "EGKK"
+  },
+  {
+    "ident": "N123SS",
+    "type": "A320",
+    "economySeats": 168,
+    "base": "EGKK"
+  },
+  {
+    "ident": "N123RC",
+    "type": "A320",
+    "economySeats": 126,
+    "base": "EGKK"
+  },
+  {
+    "ident": "N123LL",
+    "type": "A320",
+    "economySeats": 186,
+    "base": "EGKK"
+  },
+  {
+    "ident": "N123WW",
+    "type": "A320",
+    "economySeats": 186,
+    "base": "EGKK"
+  }
+]

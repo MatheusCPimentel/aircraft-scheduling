@@ -1,10 +1,10 @@
 import { render, screen, waitFor, fireEvent } from "@/test/utils";
 import { Flights } from "../Flights";
 import { mockAircraft, mockFlight } from "@/test/utils";
-import { fetchWrapper } from "@/services/api";
+import { getLocalData } from "@/services/getLocalData";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("@/services/api");
+jest.mock("@/services/localData");
 
 const mockOnAddFlight = jest.fn();
 const mockAllRotations = {};
@@ -15,11 +15,11 @@ describe("Flights", () => {
   });
 
   it("shows loading state initially", async () => {
-    (fetchWrapper as jest.Mock).mockImplementation(() => new Promise(() => {}));
+    (getLocalData as jest.Mock).mockImplementation(() => new Promise(() => {}));
 
     render(
       <Flights
-        selectedAircraft={mockAircraft}
+        selectedAircraft={null}
         onAddFlight={mockOnAddFlight}
         allRotations={mockAllRotations}
         currentRotation={[]}
@@ -29,9 +29,11 @@ describe("Flights", () => {
     expect(screen.getByTestId("flights-shimmer")).toBeInTheDocument();
   });
 
-  it("displays flight information correctly", async () => {
-    (fetchWrapper as jest.Mock).mockResolvedValue({
-      data: [mockFlight],
+  it("renders flights correctly", async () => {
+    const mockFlights = [mockFlight];
+    (getLocalData as jest.Mock).mockResolvedValue({
+      data: mockFlights,
+      responseInfo: { status: 200, statusText: "OK", url: "local://flights" },
     });
 
     render(
@@ -84,7 +86,7 @@ describe("Flights", () => {
   });
 
   it("disables already added flights", async () => {
-    (fetchWrapper as jest.Mock).mockResolvedValue({
+    (getLocalData as jest.Mock).mockResolvedValue({
       data: [mockFlight],
     });
 
@@ -121,7 +123,7 @@ describe("Flights", () => {
   });
 
   it("shows message when no aircraft is selected", async () => {
-    (fetchWrapper as jest.Mock).mockResolvedValue({
+    (getLocalData as jest.Mock).mockResolvedValue({
       data: [mockFlight],
     });
 
@@ -155,7 +157,7 @@ describe("Flights", () => {
   });
 
   it("handles API error gracefully", async () => {
-    (fetchWrapper as jest.Mock).mockRejectedValue(new Error("API Error"));
+    (getLocalData as jest.Mock).mockRejectedValue(new Error("API Error"));
 
     render(
       <Flights
