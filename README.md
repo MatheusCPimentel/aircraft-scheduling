@@ -1,7 +1,6 @@
 # Aircraft Rotation Management System ✈️
 
 A modern web application built with Next.js and TypeScript for managing aircraft rotations and flight schedules.
-You can check 
 
 ---
 
