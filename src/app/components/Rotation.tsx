@@ -50,7 +50,7 @@ export const Rotation = ({
               No flights in rotation. Add flights from the list on the right.
             </p>
           ) : (
-            currentRotation.map((flight) => (
+            currentRotation.map((flight, index) => (
               <div
                 key={flight.ident}
                 className="flex items-center justify-between p-4 border rounded-xl bg-white"
@@ -61,13 +61,15 @@ export const Rotation = ({
                       Flight {flight.ident}
                     </span>
 
-                    <button
-                      onClick={() => onRemoveFlight(flight)}
-                      className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors duration-200"
-                      aria-label="Remove flight"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
+                    {currentRotation.length - 1 === index && (
+                      <button
+                        onClick={() => onRemoveFlight(flight)}
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors duration-200"
+                        aria-label="Remove flight"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between bg-slate-50 p-4 rounded-lg">
